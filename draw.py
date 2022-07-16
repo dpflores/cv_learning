@@ -14,17 +14,26 @@ def rescaleFrame(frame, scale = 0.75):
 
 img = cv.imread('test_image.png')
 
-# Paint the image a certain color 
-v1 = (13, 315)
-v2 = (10, 209)
-v3 = (134, 169)
-v4 = (225, 169)
-cv.line(img, v1, v2, (0,0,255), thickness=3)
-cv.line(img, v2, v3, (0,0,255), thickness=3)
-cv.line(img, v3, v4, (0,0,255), thickness=3)
-cv.line(img, v4, v1, (0,0,255), thickness=3)
+overlay = img.copy() # Create a layer with perimeter
+overlay2 = img.copy()   # Create a layer with filled area
 
-final_img = img
+# Vertices of the quadrilaterla
+vertices = np.array([[13, 315],[10, 209],[134, 169],[225, 169]])
+
+# Quadrilateral perimeter
+cv.polylines(overlay, [vertices], isClosed=True, color=(0,0,255), thickness=3)
+
+# Quadrilateral area
+cv.fillPoly(overlay2, pts = [vertices], color =(0,0,255))
+
+# Adding the perimeter layer with certain transparency
+alpha = 0.8
+img1 = cv.addWeighted(overlay, alpha, img, 1 - alpha, 0)
+
+alpha = 0.4
+img2 = cv.addWeighted(overlay2, alpha, img1, 1 - alpha, 0)
+
+final_img = img2
 #final_img = rescaleFrame(img, scale=1.5)
 
 cv.imshow('test image', final_img)
