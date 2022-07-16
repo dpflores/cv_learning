@@ -30,6 +30,7 @@ polygon2 = MyPolygon(vertices_area,color=(0, 0, 255))
 # Combine YOLO results
 alpha = 0.8
 img2 = cv.addWeighted(np.squeeze(results.render()), alpha, img, 1 - alpha, 0)
+
 # Just draw the area since yolo will show the box of the person
 img2 = polygon2.draw_polygon(img2)
 img2 = polygon2.fill_polygon(img2)
