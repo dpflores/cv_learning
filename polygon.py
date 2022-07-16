@@ -3,10 +3,11 @@ import numpy as np
 
 from shapely.geometry import Polygon
 
-class Polygon:
+class MyPolygon:
     def __init__(self, vertices, color=(0, 0, 255)):
         self.vertices = vertices
         self.color = color
+        self.geometry_polygon = Polygon(vertices)
     
     def draw_polygon(self, img, alpha=0.8):
         overlay = img.copy() # Create a layer with perimeter
@@ -23,3 +24,9 @@ class Polygon:
         new_img = cv.addWeighted(overlay, alpha, img, 1 - alpha, 0)
         return new_img
     
+    def intersection_percentage(self, polygon):
+        p1 = self.geometry_polygon
+        p2 = polygon.geometry_polygon
+        percentage = 100*p1.intersection(p2).area / p1.union(p2).area
+
+        return percentage
