@@ -4,7 +4,7 @@ import torch
 
 # Model
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
-model.conf = 0.5 # Non-Maximum Suppression confidence threshold
+model.conf = 0.5    # Non-Maximum Suppression confidence threshold
 model.classes = 0   # Just to detect persons according to coco.yalm
 capture = cv.VideoCapture('test_video.mp4')    # 0 for webcamera
 
