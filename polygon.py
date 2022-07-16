@@ -28,5 +28,4 @@ class MyPolygon:
         p1 = self.geometry_polygon
         p2 = polygon.geometry_polygon
         percentage = 100*p1.intersection(p2).area / p1.union(p2).area
-
         return percentage
