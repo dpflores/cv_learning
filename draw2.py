@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-
+from polygon import *
 
 def rescaleFrame(frame, scale = 0.75):
     
@@ -14,24 +14,13 @@ def rescaleFrame(frame, scale = 0.75):
 
 img = cv.imread('test_image.png')
 
-overlay = img.copy() # Create a layer with perimeter
-overlay2 = img.copy()   # Create a layer with filled area
 
 # Vertices of the quadrilateral
 vertices = np.array([[13, 315],[10, 209],[134, 169],[225, 169]])
 
-# Quadrilateral perimeter
-cv.polylines(overlay, [vertices], isClosed=True, color=(0,0,255), thickness=3)
-
-# Quadrilateral area
-cv.fillPoly(overlay2, pts = [vertices], color =(0,0,255))
-
-# Adding the perimeter layer with certain transparency
-alpha = 0.8
-img1 = cv.addWeighted(overlay, alpha, img, 1 - alpha, 0)
-
-alpha = 0.4
-img2 = cv.addWeighted(overlay2, alpha, img1, 1 - alpha, 0)
+polygon1 = Polygon(vertices,color=(0, 0, 255))
+img2 = polygon1.draw_polygon(img)
+img2 = polygon1.fill_polygon(img2)
 
 final_img = img2
 #final_img = rescaleFrame(img, scale=1.5)

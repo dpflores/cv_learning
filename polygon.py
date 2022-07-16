@@ -1,0 +1,25 @@
+import cv2 as cv
+import numpy as np
+
+from shapely.geometry import Polygon
+
+class Polygon:
+    def __init__(self, vertices, color=(0, 0, 255)):
+        self.vertices = vertices
+        self.color = color
+    
+    def draw_polygon(self, img, alpha=0.8):
+        overlay = img.copy() # Create a layer with perimeter
+    
+        # Quadrilateral perimeter
+        cv.polylines(overlay, [self.vertices], isClosed=True, color=self.color, thickness=3)
+        new_img = cv.addWeighted(overlay, alpha, img, 1 - alpha, 0)
+        return new_img
+
+    def fill_polygon(self, img, alpha=0.4):
+        overlay = img.copy()   # Create a layer with filled area
+        # Quadrilateral area
+        cv.fillPoly(overlay, pts = [self.vertices], color=self.color)
+        new_img = cv.addWeighted(overlay, alpha, img, 1 - alpha, 0)
+        return new_img
+    
