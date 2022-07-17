@@ -3,7 +3,7 @@ import cv2 as cv
 import torch
 from polygon import *
 
-SAVE_VIDEO = True
+SAVE_VIDEO = False
 
 def draw_text(img, text,
           font=cv.FONT_HERSHEY_SIMPLEX,
